@@ -1,1 +1,1 @@
-pygame
+pygame #-r y se le coloca el nombre del archivo para descragar varias bibliotecas 
