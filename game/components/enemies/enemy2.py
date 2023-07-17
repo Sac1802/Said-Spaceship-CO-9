@@ -11,7 +11,6 @@ class Enemy2(Sprite):
     Y_POS = 20
     SPEED_X = 11
     SPEED_Y = 6
-    stop = 100
     def __init__(self):
         self.image = pygame.transform.scale(ENEMY_2, (50, 50))
         self.rect = self.image.get_rect()
@@ -23,7 +22,6 @@ class Enemy2(Sprite):
         self.speed_x = self.SPEED_X
         self.speed_y = self.SPEED_Y
         self.number = self.number_random
-        self.stop = self.stop
         self.movement = random.choice([LEFT, RIGHT])
         self.move_x = random.randint(30, 100)
         self.moving_index = 0
