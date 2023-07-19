@@ -6,7 +6,7 @@ import pygame
 from game.components.bullets_spaceship.bullet_space_manager import BulletSpaceManager
 from game.components.bullets_spaceship.bullet_space_manager import BulletSpaceManager
 from game.components.spaceship import Spaceship
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE, WALLPAPER
 
 class Game:
     def __init__(self):
@@ -25,8 +25,9 @@ class Game:
         self.bullet_manager = BulletManager()
         self.bullet_space_manager = BulletSpaceManager()
         
-        self.menu = Menu("Press any key to start...")
+        self.menu = Menu("")
         self.score = 0
+        self.score_max = 0
         self.death_count = 0
 
     def run(self):
@@ -35,12 +36,14 @@ class Game:
         while self.running:
             if not self.playing:
                 self.show_menu()
+                self.menu.update_message("Please press the ENTER key!")
         pygame.display.quit()
         pygame.quit()
         
     def play(self):
         self.playing = True
         self.enemy_manager.reset()
+        self.bullet_space_manager.resect_bullet()
         self.score = 0
         while self.playing:
             self.events()
@@ -90,7 +93,14 @@ class Game:
 
     def show_menu(self):
         if self.death_count > 0:
-            self.menu.update_message("other message!!")
+            self.menu.update_message(f"You have died {self.death_count} times")
+            self.menu.update_score(f"Your score is : {self.score}")
+            if self.score > self.score_max:
+                self.score_max = 0
+                self.score_max += self.score
+                self.menu.update_score_max(f"Your highest score is: {self.score_max}")
+            else:
+                self.menu.update_score_max(f"Your highest score is: {self.score_max}")
         self.menu.draw(self.screen)
         self.menu.events(self.on_close, self.play)
         

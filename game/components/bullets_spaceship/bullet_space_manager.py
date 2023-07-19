@@ -23,3 +23,6 @@ class BulletSpaceManager:
     def add_bullet1(self, spaceship):
         if spaceship.type == PLAYER_TYPE and not self.bullets:
             self.bullets.append(BulletSpaceship(spaceship))
+            
+    def resect_bullet(self):
+        self.bullets = []
