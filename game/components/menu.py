@@ -49,4 +49,9 @@ class Menu():
         self.text_rect_score_max = self.text.get_rect()
         self.text_rect_score_max.center = (self.HALF_SCREEN_WIDTH - 5, self.HALF_SCREEN_HEIGHT + 100)
         
+    def draw_update_power_up(self, screen, message, x=HALF_SCREEN_WIDTH, y=HALF_SCREEN_HEIGHT, color=(0,0,0)):
+        text = self.font.render(message, True, color)
+        text_rect = text.get_rect()
+        text_rect.center = (x, y)
+        screen.blit(text, text_rect)
     
