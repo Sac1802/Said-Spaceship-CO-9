@@ -8,7 +8,7 @@ import pygame
 from game.components.power_ups3.power_up_manager3 import PowerUpManager3
 from game.components.bullets_spaceship.bullet_space_manager import BulletSpaceManager
 from game.components.spaceship import Spaceship
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE, HEART
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE, HEART, ICON_GAME_OVER
 
 class Game:
     def __init__(self):
@@ -123,7 +123,10 @@ class Game:
         self.screen.blit(text, text_rect)
 
     def show_menu(self):
+        HALF_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
         if self.death_count > 0:
+            self.menu.icon = pygame.transform.scale(ICON_GAME_OVER, (500, 80))
+            self.menu.icon_rect = (300, HALF_SCREEN_HEIGHT - 100)
             self.menu.update_message(f"You have died {self.death_count} times")
             self.menu.update_score(f"Your score is : {self.score}")
             self.menu.update_score_max(f"Your highest score is: {self.score_max}")
