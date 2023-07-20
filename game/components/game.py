@@ -2,11 +2,13 @@ from game.components.menu import Menu
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.power_ups.power_up_manager import PowerUpManager
+from game.components.power_ups2.power_up_manager2 import PowerUpManager2
 import pygame
 
+from game.components.power_ups3.power_up_manager3 import PowerUpManager3
 from game.components.bullets_spaceship.bullet_space_manager import BulletSpaceManager
 from game.components.spaceship import Spaceship
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE, WALLPAPER
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE, HEART
 
 class Game:
     def __init__(self):
@@ -25,11 +27,14 @@ class Game:
         self.bullet_manager = BulletManager()
         self.bullet_space_manager = BulletSpaceManager()
         self.power_up_manager = PowerUpManager()
+        self.power_up_manager2 = PowerUpManager2()
+        self.power_up_manager3 = PowerUpManager3()
         
         self.menu = Menu("")
         self.score = 0
         self.score_max = 0
         self.death_count = 0
+        self.lives = 3
 
     def run(self):
         # Game loop: events - update - draw
@@ -37,7 +42,7 @@ class Game:
         while self.running:
             if not self.playing:
                 self.show_menu()
-                self.menu.update_message("Please press the ENTER key!")
+                self.menu.update_message("Please  press  the  ENTER  key!")
         pygame.display.quit()
         pygame.quit()
         
@@ -66,6 +71,9 @@ class Game:
         self.bullet_manager.update(self)
         self.bullet_space_manager.update(self)
         self.power_up_manager.update(self)
+        self.power_up_manager2.update(self)
+        self.power_up_manager3.update(self)
+        
 
     def draw(self):
         self.clock.tick(FPS)
@@ -76,8 +84,11 @@ class Game:
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
         self.bullet_space_manager.draw(self.screen) 
+        self.power_up_manager2.draw(self.screen)
         self.power_up_manager.draw(self.screen)
+        self.power_up_manager3.draw(self.screen)
         self.draw_score()
+        self.draw_lives()
         pygame.display.update()
         pygame.display.flip()
 
@@ -93,9 +104,22 @@ class Game:
 
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 22)
-        text = font.render(f"Score: {self.score}", True, (255, 255, 255))
+        text = font.render(f"Score:    {self.score}", True, (255, 255, 255))
         text_rect = text.get_rect()
-        text_rect.center = (1000, 50)
+        text_rect.center = (1000, 35)
+        self.screen.blit(text, text_rect)
+        
+        
+    def draw_lives(self):
+        self.heart = pygame.transform.scale(HEART, (30, 30))
+        self.rect = self.heart.get_rect()
+        self.rect.x = 15
+        self.rect.y = 20
+        font = pygame.font.Font(FONT_STYLE, 22)
+        text = font.render(f" = {self.lives}", True, (255, 255, 255))
+        text_rect = text.get_rect()
+        text_rect.center = (100, 35)
+        self.screen.blit(self.heart, (self.rect.x + 30, self.rect.y))
         self.screen.blit(text, text_rect)
 
     def show_menu(self):
@@ -114,3 +138,5 @@ class Game:
         self.enemy_manager.reset()
         self.bullet_space_manager.resect_bullet()
         self.power_up_manager.reset()
+        self.power_up_manager2.reset()
+        self.bullet_manager.reset(self)

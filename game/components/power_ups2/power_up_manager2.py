@@ -1,8 +1,6 @@
 import random, pygame
-from game.components.power_ups.shield import Shield
-
-from game.utils.constants import TYPE_SHIP
-class PowerUpManager:
+from game.components.power_ups2.shield2 import Shield2
+class PowerUpManager2:  
     def __init__(self):
         self.power_ups = []
         self.when_appers = 0
@@ -10,8 +8,8 @@ class PowerUpManager:
     def generate_power_up(self):
         current_time = pygame.time.get_ticks()
         if not self.power_ups and current_time >= self.when_appers:
-            self.when_appers += random.randint(10000, 15000)
-            self.power_ups.append(Shield())
+            self.when_appers += random.randint(16000, 20000)
+            self.power_ups.append(Shield2())
     
     def update(self, game):
         self.generate_power_up()
@@ -24,6 +22,7 @@ class PowerUpManager:
                 game.player.pick_power_up(power_up_time_up, power_up.type, power_up.spaceship_image)
                 self.power_ups.remove(power_up)
     
+    
     def draw(self, screen):
         for power_up in self.power_ups:
             power_up.draw(screen)
@@ -31,6 +30,4 @@ class PowerUpManager:
     def reset(self):
         self.power_ups = []
         now = pygame.time.get_ticks()
-        self.when_appers = now + random.randint(10000, 15000)
-        
-            
+        self.when_appers = now + random.randint(16000, 20000)

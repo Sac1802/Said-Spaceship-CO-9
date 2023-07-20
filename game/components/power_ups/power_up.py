@@ -1,5 +1,5 @@
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
-import pygame, random
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, SPACESHIP_SHIELD
+import random
 from pygame.sprite import Sprite
 
 class PowerUp(Sprite):
@@ -18,3 +18,5 @@ class PowerUp(Sprite):
     
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        
+        
